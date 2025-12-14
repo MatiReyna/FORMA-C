@@ -92,11 +92,11 @@ export const COLORS = {
     darkQuaternary: DARK_BASE_DARK,
 
     category: {
-        Health: GREEN_NATURE,
-        Fitness: YELLOW_ACCENT,
-        Mindfulness: TERRACOTTA,
-        Work: BEIGE_ELEGANT,
-        Finance: BEIGE_ELEGANT_LIGHT
+        health: GREEN_NATURE,
+        fitness: YELLOW_ACCENT,
+        mindfulness: TERRACOTTA,
+        work: BEIGE_ELEGANT,
+        finance: BEIGE_ELEGANT_LIGHT
     },
 
     priority: {
