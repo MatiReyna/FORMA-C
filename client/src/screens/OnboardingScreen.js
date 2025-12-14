@@ -19,7 +19,7 @@ const slides = [
     {
         id: 1,
         image: logo,
-        title: '',
+        title: 'FORMA',
         subtitle: '',
         description: '',
     },
@@ -27,29 +27,29 @@ const slides = [
         id: 2,
         image: forma,
         title: 'Welcome to FORMA',
-        subtitle: 'Build better habits, one day at a time.',
-        description: 'The elegant habit tracker that helps you transform your daily routines into lasting positive changes. Minimalist design meets powerful insights.'
+        subtitle: 'Build habits with intention.',
+        description: 'FORMA helps you shape mindful habits at your own pace. A calm, minimalist space designed to turn small daily actions into lasting change.'
     },
     {
         id: 3,
         image: health,
-        title: 'Track Your Journey',
-        subtitle: 'Organize your habits effortlessly.',
-        description: 'Create, manage, and complete your habits with intuitive gestures. Watch your consistency build into meaningful progress.'
+        title: 'Your Daily Practice',
+        subtitle: 'Consistency over perfection.',
+        description: 'Create and follow habits with simplicity. FORMA focuses on steady progress, helping you stay present and build routines that last.'
     },
     {
         id: 4,
         image: wellness,
-        title: 'Insights That Matter',
-        subtitle: 'Visualize your growth.',
-        description: 'Beautiful charts and statistics reveal what\'s working. Discover patterns, celebrate wins, and optimize your approach.'
+        title: 'See Your Progress',
+        subtitle: 'Awareness creates change.',
+        description: 'Gentle insights help you understand your habits over time. Observe patterns, reflect calmly, and adjust with intention.'
     },
     {
         id: 5,
         image: rewards,
-        title: 'Stay Motivated',
-        subtitle: 'Unlock achievements and build streaks.',
-        description: 'Transform habit-building into an exciting journey. Earn badges, maintain streaks, and watch your progress come to life.'
+        title: 'Stay Consistent',
+        subtitle: 'Progress feels better when it’s calm.',
+        description: 'FORMA encourages gentle motivation. Celebrate your commitment, build meaningful streaks, and enjoy the process — without pressure.'
     }
 ]
 
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: '100%',
-        height: SCREEN_HEIGHT * 0.35,
+        height: Math.min(SCREEN_HEIGHT * 0.35, 280),
         marginBottom: 48,
         alignItems: 'center',
         justifyContent: 'center'
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
         color: COLORS.textTertiary,
         textAlign: 'center',
         paddingHorizontal: 32,
-        marginTop: 24,
+        marginTop: 14,
         lineHeight: 22,
         letterSpacing: 0.2
     },
