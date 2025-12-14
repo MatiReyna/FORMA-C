@@ -6,7 +6,7 @@ import { COLORS } from './src/constants/colors';
 export default function App() {
   return (
     <View style={ styles.loadingContainer }>
-      <StatusBar style='auto' />
+      <StatusBar style='light' />
     </View>
   );
 }

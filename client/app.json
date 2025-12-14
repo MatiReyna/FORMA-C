@@ -2,10 +2,10 @@
   "expo": {
     "name": "FORMA",
     "slug": "forma",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
-    "description": "Build better habits, one day at a time. Track your progress and achieve your goals with style.",
+    "description": "Shape mindful habits at your own pace. Calm progress, meaningful goals.",
     "newArchEnabled": true,
     "splash": {
       "resizeMode": "contain",
