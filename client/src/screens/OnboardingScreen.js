@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable, Dimensions, Image } from 'react-native';
+import { useState, useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, Pressable, Dimensions, Image, Animated } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
@@ -19,9 +19,9 @@ const slides = [
     {
         id: 1,
         image: logo,
-        title: 'FORMA',
+        title: '',
         subtitle: '',
-        description: '',
+        description: 'THIS IS FORMA',
     },
     {
         id: 2,
@@ -57,6 +57,15 @@ export default function OnboardingScreen({ navigation }) {
 
     const [ currentIndex, setCurrentIndex ] = useState(0);
     const scrollViewRef = useRef(null);
+    const logoAnimation = useRef(new Animated.Value(0)).current;
+
+    useEffect(() => {
+        Animated.timing(logoAnimation, {
+            toValue: 1,
+            duration: 900,
+            useNativeDriver: true
+        }).start();
+    }, []);
 
     const handleScroll = (event) => {
         const slideIndex = Math.round(event.nativeEvent.contentOffset.x / SCREEN_WIDTH);
@@ -111,19 +120,55 @@ export default function OnboardingScreen({ navigation }) {
                     slides.map((slide, index) => (
                         <View key={ slide.id } style={ styles.slide }>
                             <View style={ styles.slideContent }>
-                                <View style={ styles.imageContainer }>
-                                    <Image
-                                        source={ slide.image }
-                                        style={ styles.illustration }
-                                        resizeMode='contain'
-                                    />
+                                <View
+                                    style={[
+                                        styles.imageContainer,
+                                        index === 0 && styles.logoContainer
+                                    ]}
+                                >
+                                    {
+                                        index === 0 ? (
+                                            <Animated.Image
+                                                source={ slide.image }
+                                                resizeMode='contain'
+                                                style={[
+                                                    styles.logoImage,
+                                                    {
+                                                        opacity: logoAnimation,
+                                                        transform: [
+                                                            {
+                                                                scale: logoAnimation.interpolate({
+                                                                    inputRange: [0, 1],
+                                                                    outputRange: [0.92, 1]
+                                                                })
+                                                            }
+                                                        ]
+                                                    }
+                                                ]}
+                                            />
+                                        ) : (
+                                            <Image
+                                                source={ slide.image }
+                                                style={ styles.illustration }
+                                                resizeMode='contain'
+                                            />
+                                        )
+                                    }
                                 </View>
 
-                                <View style={ styles.textContainer }>
-                                    <Text style={ styles.title }>{ slide.title }</Text>
-                                    <Text style={ styles.subtitle }>{ slide.subtitle }</Text>
-                                </View>
-                                <Text style={ styles.description }>{ slide.description }</Text>
+                                {
+                                    slide.title || slide.subtitle ? (
+                                        <View style={ styles.textContainer }>
+                                            { slide.title ? <Text style={ styles.title }>{ slide.title }</Text> : null }
+                                            { slide.subtitle ? <Text style={ styles.subtitle }>{ slide.subtitle }</Text> : null }
+                                        </View>
+                                    ) : null
+                                }
+                                {
+                                    slide.description ? (
+                                        <Text style={ styles.description }>{ slide.description }</Text>
+                                    ) : null
+                                }
                             </View>
                         </View>
                     ))
@@ -186,6 +231,18 @@ const styles = StyleSheet.create({
         marginBottom: 48,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    logoContainer: {
+        height: Math.min(SCREEN_HEIGHT * 0.5, 360),
+        marginBottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    logoImage: {
+        width: '100%',
+        height: '100%',
+        maxWidth: 340,
+        maxHeight: 340
     },
     illustration: {
         width: '100%',
