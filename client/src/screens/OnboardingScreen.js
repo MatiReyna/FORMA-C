@@ -160,25 +160,129 @@ export default function OnboardingScreen({ navigation }) {
 };
 
 const styles = StyleSheet.create({
-    container: {},
-    scrollView: {},
-    slide: {},
-    slideContent: {},
-    imageContainer: {},
-    illustration: {},
-    textContainer: {},
-    title: {},
-    subtitle: {},
-    description: {},
-    pagination: {},
-    dot: {},
-    dotActive: {},
-    actions: {},
-    primaryButton: {},
-    nextButton: {},
-    getStartedButton: {},
-    buttonPressed: {},
-    nextButtonText: {},
-    getStartedButtonText: {},
-    buttonIcon: {}
+    container: {
+        flex: 1,
+        backgroundColor: COLORS.background
+    },
+    scrollView: { flex: 1 },
+    slide: {
+        width: SCREEN_WIDTH,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 24,
+        paddingTop: 100,
+        paddingBottom: 24
+    },
+    slideContent: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        width: '100%'
+    },
+    imageContainer: {
+        width: '100%',
+        height: SCREEN_HEIGHT * 0.35,
+        marginBottom: 48,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    illustration: {
+        width: '100%',
+        height: '100%',
+        maxWidth: 300,
+        maxHeight: 300,
+        opacity: 0.95
+    },
+    textContainer: {
+        alignItems: 'center',
+        marginBottom: 24,
+        paddingHorizontal: 24
+    },
+    title: {
+        ...TYPOGRAPHY.HEADING_1,
+        color: COLORS.textPrimary,
+        textAlign: 'center',
+        marginBottom: 16,
+        letterSpacing: -0.5
+    },
+    subtitle: {
+        ...TYPOGRAPHY.BODY_SMALL,
+        color: COLORS.primary,
+        textAlign: 'center',
+        fontWeight: '600',
+        letterSpacing: 0.3
+    },
+    description: {
+        ...TYPOGRAPHY.BODY_SMALL,
+        color: COLORS.textTertiary,
+        textAlign: 'center',
+        paddingHorizontal: 32,
+        marginTop: 24,
+        lineHeight: 22,
+        letterSpacing: 0.2
+    },
+    pagination: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 24,
+        marginBottom: 16,
+        gap: 8
+    },
+    dot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: COLORS.surfaceSecondary,
+        borderWidth: 1,
+        borderColor: COLORS.border
+    },
+    dotActive: {
+        width: 32,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: COLORS.primary,
+        borderWidth: 0
+    },
+    actions: {
+        paddingHorizontal: 24,
+        paddingBottom: 60,
+        alignItems: 'center'
+    },
+    primaryButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: COLORS.primary,
+        paddingVertical: 18,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: COLORS.border
+    },
+    nextButton: {
+        paddingHorizontal: 40,
+        minWidth: 140
+    },
+    getStartedButton: {
+        paddingHorizontal: 48,
+        minWidth: 220
+    },
+    buttonPressed: {
+        opacity: 0.85,
+        transform: [{ scale: 0.97 }]
+    },
+    nextButtonText: {
+        ...TYPOGRAPHY.BODY,
+        fontWeight: '600',
+        color: COLORS.dark,
+        letterSpacing: 0.3
+    },
+    getStartedButtonText: {
+        ...TYPOGRAPHY.HEADING_4,
+        fontWeight: '700',
+        color: COLORS.dark,
+        letterSpacing: -0.3
+    },
+    buttonIcon: { marginLeft: 12 }
 });
