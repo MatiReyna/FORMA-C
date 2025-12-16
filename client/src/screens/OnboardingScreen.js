@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Pressable, Dimensions, Image, Anima
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
-import { COLORS } from '../constants/colors';
+import { STORAGE_KEYS, COLORS } from '../constants';
 import { TYPOGRAPHY } from '../constants/typography';
 import storageService from '../services/storageService';
 
@@ -90,7 +90,16 @@ export default function OnboardingScreen({ navigation }) {
         }
     };
 
-    const handleGetStarted = async () => {};
+    const handleGetStarted = async () => {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+        try {
+            await storageService.setItem(STORAGE_KEYS.HAS_SEEN_ONBOARDING, 'true');
+            navigation.replace('Auth');
+        } catch (error) {
+            console.error('Error saving onboarding status:', error);
+            navigation.replace('Auth');
+        }
+    };
 
     const PrimaryButton = ({ onPress, text, variant = 'next' }) => (
         <Pressable
