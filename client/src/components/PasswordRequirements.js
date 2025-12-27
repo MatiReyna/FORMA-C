@@ -25,11 +25,11 @@ const PasswordRequirements = memo(({ password }) => {
     }
 
     const requirements = [
-        { met: minLengthMet, text: 'At least 5 characters' },
-        { met: hasUpperCase, text: 'One uppercase letter' },
+        { met: minLengthMet, text: 'Minimum 5 characters' },
+        { met: hasUpperCase, text: 'Add a capital letter' },
         { met: hasLowerCase, text: 'One lowercase letter' },
-        { met: hasNumbers, text: 'One number' },
-        { met: hasSpecialChar, text: 'One special character' }
+        { met: hasNumbers, text: 'Add a number' },
+        { met: hasSpecialChar, text: 'Try with aspecial character' }
     ]
 
     return (

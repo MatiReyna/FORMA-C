@@ -37,9 +37,9 @@ export const getPasswordStrength = (password) => {
     if (checks.hasNumbers) strength += 10;
     if (checks.hasSpecialChar) strength += 10;
 
-    let level = 'weak';
-    if (strength >= 70) level = 'strong';
-    else if (strength >= 40) level = 'medium';
+    let level = 'Can be stronger';
+    if (strength >= 70) level = 'Excellent';
+    else if (strength >= 40) level = 'Good';
 
     return { level, percentage: Math.min(strength, 100) };
 }
