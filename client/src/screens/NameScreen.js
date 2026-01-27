@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { View, Text, TextInput, KeyboardAvoidingView, Platform, Pressable } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { COLORS } from '../constants/colors';
+import { STORAGE_KEYS } from '../constants';
+import storageService from '../services/storageService';
 
 export default function NameScreen({ onSubmit }) {
 
@@ -13,7 +14,7 @@ export default function NameScreen({ onSubmit }) {
         if (!trimmed) return;
 
         try {
-            await AsyncStorage.setItem('userName', trimmed);
+            await storageService.setItem(STORAGE_KEYS.USER_NAME, trimmed);
             onSubmit(trimmed);
         } catch (error) {
             console.error('Error saving user name:', error);

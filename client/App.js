@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import OnboardingScreen from './src/screens/OnboardingScreen';
 import AuthScreen from './src/screens/AuthScreen';
+import NameScreen from './src/screens/NameScreen';
 
 import { COLORS } from './src/constants/colors';
+import { STORAGE_KEYS } from './src/constants';
+import storageService from './src/services/storageService';
 
 export default function App() {
 
@@ -18,8 +20,8 @@ export default function App() {
   useEffect(() => {
     const loadAppState = async () => {
       try {
-        const storedOnboarding = await AsyncStorage.getItem('hasCompletedOnboarding');
-        const storedName = await AsyncStorage.getItem('userName');
+        const storedOnboarding = await storageService.getItem(STORAGE_KEYS.HAS_SEEN_ONBOARDING);
+        const storedName = await storageService.getItem(STORAGE_KEYS.USER_NAME);
 
         setHasCompletedOnboarding(storedOnboarding === 'true');
         setUserName(storedName);
@@ -32,6 +34,10 @@ export default function App() {
     loadAppState();
   }, []);
 
+  const handleNameSubmit = (name) => {
+    setUserName(name);
+  };
+
   return (
     <SafeAreaProvider>
       <StatusBar style='light' backgroundColor={ COLORS.background } />
@@ -41,11 +47,7 @@ export default function App() {
         ) : !hasCompletedOnboarding ? (
           <OnboardingScreen />
         ) : !userName ? (
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ color: COLORS.textPrimary }}>
-              Name screen placeholder
-            </Text>
-          </View>
+          <NameScreen onSubmit={ handleNameSubmit } />
         ) : (
           <AuthScreen />
         )

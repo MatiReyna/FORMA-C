@@ -53,7 +53,7 @@ const slides = [
     }
 ]
 
-export default function OnboardingScreen({ navigation }) {
+export default function OnboardingScreen() {
 
     const [ currentIndex, setCurrentIndex ] = useState(0);
     const scrollViewRef = useRef(null);
@@ -89,10 +89,8 @@ export default function OnboardingScreen({ navigation }) {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         try {
             await storageService.setItem(STORAGE_KEYS.HAS_SEEN_ONBOARDING, 'true');
-            navigation.replace('Auth');
         } catch (error) {
             console.error('Error saving onboarding status:', error);
-            navigation.replace('Auth');
         }
     };
 
