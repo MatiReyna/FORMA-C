@@ -452,10 +452,198 @@ export default function AuthScreen({ navigation }) {
                             { isLogin ? AUTH_MESSAGES.LOGO_SUBTEXT_LOGIN : AUTH_MESSAGES.LOGO_SUBTEXT_REGISTER }
                         </Text>
                     </View>
+
+                    <Animated.View style={{ transform: [{ scale: cardAnim }] }}>
+                        <View style={ styles.formContainer }>
+                            {
+                                isLogin && (
+                                    <View style={ styles.progressIndicator }>
+                                        <View style={ styles.progressSteps }>
+                                            <View style={[ styles.progressStep, styles.progressStepActive ]}>
+                                                <View style={ styles.progressStepDot } />
+                                                <Text style={ styles.progressStepLabel }>Account</Text>
+                                            </View>
+                                            <View style={ styles.progressLine } />
+                                            <View style={[ styles.progressStep, password && isPasswordValid && styles.progressStepActive ]}>
+                                                <View style={[ styles.progressStepDot, password && isPasswordValid && styles.progressStepDotActive ]} />
+                                                <Text style={[ styles.progressStepLabel, password && isPasswordValid && styles.progressStepLabelActive ]}>Password</Text>
+                                            </View>
+                                        </View>
+                                    </View>
+                                )
+                            }
+
+                            <View style={ styles.formHeader }>
+                                <Text style={ styles.formTitle }>
+                                    { isLogin ? AUTH_MESSAGES.FORM_TITLE_LOGIN : AUTH_MESSAGES.FORM_TITLE_REGISTER }
+                                </Text>
+                            </View>
+
+                            <EmailField
+                                ref={ emailInputRef }
+                                value={ email }
+                                onChangeText={ (text) => {
+                                    setEmail(text);
+                                    debouncedEmailValidation(text);
+                                } }
+                                error={ errors.email }
+                                isValid={ isEmailValid }
+                                placeholder={ AUTH_MESSAGES.EMAIL_PLACEHOLDER }
+                                editable={ !isLoading }
+                                returnKeyType='next'
+                                onSubmitEditing={ () => passwordInputRef.current?.focus() }
+                                accessibilityLabel={ AUTH_MESSAGES.ACCESSIBILITY_EMAIL_INPUT }
+                            />
+
+                            <PasswordField
+                                ref={ passwordInputRef }
+                                label={ AUTH_MESSAGES.PASSWORD_LABEL }
+                                value={ password }
+                                onChangeText={ (text) => {
+                                    setPassword(text);
+                                    debouncedPasswordValidation(text);
+                                    if (!isLogin && confirmPassword) {
+                                        debouncedConfirmPasswordValidation(confirmPassword, text);
+                                    }
+                                } }
+                                error={ errors.password }
+                                isValid={ isPasswordValid }
+                                showPassword={ showPassword }
+                                onToggleVisibility={ () => setShowPassword(!showPassword) }
+                                placeholder={ AUTH_MESSAGES.PASSWORD_PLACEHOLDER }
+                                autoComplete='password'
+                                editable={ !isLoading }
+                                returnKeyType={ !isLogin ? 'next' : 'go' }
+                                onSubmitEditing={ () => {
+                                    if (!isLogin) {
+                                        confirmPasswordInputRef.current?.focus();
+                                    } else {
+                                        handleSubmit();
+                                    }
+                                } }
+                                accessibilityLabel={ AUTH_MESSAGES.ACCESSIBILITY_PASSWORD_INPUT }
+                            />
+
+                            {
+                                password.length > 0 && (
+                                    <PasswordRequirements password={ password } />
+                                )
+                            }
+
+                            {
+                                !isLogin && (
+                                    <PasswordField
+                                        ref={ confirmPasswordInputRef }
+                                        label={ AUTH_MESSAGES.CONFIRM_PASSWORD_LABEL }
+                                        value={ confirmPassword }
+                                        onChangeText={ (text) => {
+                                            setConfirmPassword(text);
+                                            debouncedConfirmPasswordValidation(text, password);
+                                        } }
+                                        error={ errors.confirmPassword }
+                                        isValid={ isConfirmPasswordValid }
+                                        showPassword={ showConfirmPassword }
+                                        onToggleVisibility={ () => setShowConfirmPassword(!showConfirmPassword) }
+                                        placeholder={ AUTH_MESSAGES.CONFIRM_PASSWORD_PLACEHOLDER }
+                                        autoComplete='password'
+                                        editable={ !isLoading }
+                                        returnKeyType='go'
+                                        onSubmitEditing={ handleSubmit }
+                                        accessibilityLabel={ AUTH_MESSAGES.ACCESSIBILITY_CONFIRM_PASSWORD_INPUT }
+                                        confirmPassword={ password }
+                                        isConfirmField={ true }
+                                    />
+                                )
+                            }
+
+                            <Pressable
+                                onPress={ handleSubmit }
+                                disabled={ isLoading }
+                                style={ ({ pressed }) => [
+                                    styles.submitButton,
+                                    (isLoading || pressed) && styles.submitButtonPressed,
+                                    isLoading && styles.submitButtonDisabled
+                                ] }
+                                accessibilityLabel={ AUTH_MESSAGES.ACCESSIBILITY_SUBMIT_BUTTON }
+                                accessibilityRole='button'
+                                accessibilityState={{ disabled: isLoading }}
+                            >
+                                {
+                                    isLoading ? (
+                                        <>
+                                            <ActivityIndicator size='small' color={ COLORS.background } style={ styles.loader } />
+                                            <Text style={ styles.submitButtonText }>{ AUTH_MESSAGES.LOADING }</Text>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Text style={ styles.submitButtonText }>
+                                                { isLogin ? AUTH_MESSAGES.SUBMIT_LOGIN : AUTH_MESSAGES.SUBMIT_REGISTER }
+                                            </Text>
+                                            <Ionicons name='arrow-forward' size={ 18 } color={ COLORS.dark } />
+                                        </>
+                                    )
+                                }
+                            </Pressable>
+
+                            <View style={ styles.toggleContainer }>
+                                <Text style={ styles.toggleText }>
+                                    { isLogin ? AUTH_MESSAGES.TOGGLE_NO_ACCOUNT : AUTH_MESSAGES.TOGGLE_HAS_ACCOUNT }
+                                </Text>
+                                <Pressable
+                                    onPress={ toggleMode }
+                                    disabled={ isLoading }
+                                    accessibilityLabel={ AUTH_MESSAGES.ACCESSIBILITY_TOGGLE_MODE }
+                                    accessibilityRole='button'
+                                >
+                                    <Text style={[ styles.toggleLink, isLoading && styles.toggleLinkDisabled ]}>
+                                        { isLogin ? AUTH_MESSAGES.TOGGLE_SIGN_UP : AUTH_MESSAGES.TOGGLE_SIGN_IN }
+                                    </Text>
+                                </Pressable>
+                            </View>
+
+                            {
+                                isLogin && (
+                                    <Pressable
+                                        onPress={ handleUseDemo }
+                                        disabled={ isLoading }
+                                        style={ ({pressed}) => [
+                                            styles.demoButton,
+                                            pressed && styles.demoButtonPressed,
+                                            isLoading && styles.demoButtonDisabled
+                                        ] }
+                                        accessibilityLabel={ AUTH_MESSAGES.ACCESSIBILITY_DEMO_BUTTON }
+                                        accessibilityRole='button'
+                                    >
+                                        <Ionicons name='sparkles-outline' size={ 18 } color={ COLORS.primary } />
+                                        <Text style={ styles.demoButtonText }>{ AUTH_MESSAGES.DEMO_BUTTON }</Text>
+                                    </Pressable>
+                                )
+                            }
+                        </View>
+                    </Animated.View>
                 </View>
             </ScrollView>
         </View>
     )
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: COLORS.background
+    },
+    backButton: {
+        position: 'absolute',
+        left: 24,
+        zIndex: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        minWidth: 44,
+        minHeight: 44,
+        paddingVertical: 8,
+        paddingHorizontal: 12
+    },
+    backButtonPressed: {},
+    backButtonText: {},
+});
