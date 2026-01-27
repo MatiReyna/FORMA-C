@@ -21,35 +21,35 @@ const slides = [
         image: logo,
         title: '',
         subtitle: '',
-        description: 'THIS IS FORMA',
+        description: 'FORMA',
     },
     {
         id: 2,
         image: forma,
-        title: 'Welcome to FORMA',
-        subtitle: 'Build habits with intention.',
-        description: 'FORMA helps you shape mindful habits at your own pace. A calm, minimalist space designed to turn small daily actions into lasting change.'
+        title: '',
+        subtitle: '',
+        description: 'Begin with one.\nBegin today.'
     },
     {
         id: 3,
         image: health,
-        title: 'Your Daily Practice',
-        subtitle: 'Consistency over perfection.',
-        description: 'Create and follow habits with simplicity. FORMA focuses on steady progress, helping you stay present and build routines that last.'
+        title: '',
+        subtitle: '',
+        description: 'Return.\nAgain and again.'
     },
     {
         id: 4,
         image: wellness,
-        title: 'See Your Progress',
-        subtitle: 'Awareness creates change.',
-        description: 'Gentle insights help you understand your habits over time. Observe patterns, reflect calmly, and adjust with intention.'
+        title: '',
+        subtitle: '',
+        description: 'Notice what stays.\nLet go of the rest.'
     },
     {
         id: 5,
         image: rewards,
-        title: 'Stay Consistent',
-        subtitle: 'Progress feels better when it’s calm.',
-        description: 'FORMA encourages gentle motivation. Celebrate your commitment, build meaningful streaks, and enjoy the process — without pressure.'
+        title: '',
+        subtitle: '',
+        description: 'Consistency\nis enough.'
     }
 ]
 
@@ -72,19 +72,14 @@ export default function OnboardingScreen({ navigation }) {
         setCurrentIndex(slideIndex);
     };
 
-    const goToSlide = (index) => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        scrollViewRef.current?.scrollTo({
-            x: index * SCREEN_WIDTH,
-            animated: true
-        });
-        setCurrentIndex(index);
-    };
-
     const handleNext = () => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         if (currentIndex < slides.length - 1) {
-            goToSlide(currentIndex + 1);
+            scrollViewRef.current?.scrollTo({
+                x: (currentIndex + 1) * SCREEN_WIDTH,
+                animated: true
+            })
+            setCurrentIndex(currentIndex + 1);
         } else {
             handleGetStarted();
         }
@@ -166,14 +161,6 @@ export default function OnboardingScreen({ navigation }) {
                                 </View>
 
                                 {
-                                    slide.title || slide.subtitle ? (
-                                        <View style={ styles.textContainer }>
-                                            { slide.title ? <Text style={ styles.title }>{ slide.title }</Text> : null }
-                                            { slide.subtitle ? <Text style={ styles.subtitle }>{ slide.subtitle }</Text> : null }
-                                        </View>
-                                    ) : null
-                                }
-                                {
                                     slide.description ? (
                                         <Text style={ styles.description }>{ slide.description }</Text>
                                     ) : null
@@ -187,13 +174,11 @@ export default function OnboardingScreen({ navigation }) {
             <View style={ styles.pagination }>
                 {
                     slides.map((_, index) => (
-                        <Pressable
+                        <View
                             key={ index }
-                            onPress={ () => goToSlide(index) }
-                            style={({ pressed }) => [
+                            style={[
                                 styles.dot,
-                                currentIndex === index && styles.dotActive,
-                                pressed && { opacity: 0.6 }
+                                currentIndex === index && styles.dotActive
                             ]}
                         />
                     ))
@@ -203,9 +188,9 @@ export default function OnboardingScreen({ navigation }) {
             <View style={ styles.actions }>
                 {
                     currentIndex < slides.length - 1 ? (
-                        <PrimaryButton onPress={ handleNext } text='Next' variant='next' />
+                        <PrimaryButton onPress={ handleNext } text='Step forward' variant='next' />
                     ) : (
-                        <PrimaryButton onPress={ handleGetStarted } text='Get started' variant='start' />
+                        <PrimaryButton onPress={ handleGetStarted } text='Enter FORMA' variant='start' />
                     )
                 }
             </View>
@@ -260,32 +245,13 @@ const styles = StyleSheet.create({
         maxHeight: 300,
         opacity: 0.95
     },
-    textContainer: {
-        alignItems: 'center',
-        marginBottom: 24,
-        paddingHorizontal: 24
-    },
-    title: {
-        ...TYPOGRAPHY.HEADING_1,
-        color: COLORS.textPrimary,
-        textAlign: 'center',
-        marginBottom: 16,
-        letterSpacing: -0.5
-    },
-    subtitle: {
-        ...TYPOGRAPHY.BODY_SMALL,
-        color: COLORS.primary,
-        textAlign: 'center',
-        fontWeight: '600',
-        letterSpacing: 0.3
-    },
     description: {
-        ...TYPOGRAPHY.BODY_SMALL,
+        ...TYPOGRAPHY.HEADING_3,
         color: COLORS.textTertiary,
         textAlign: 'center',
         paddingHorizontal: 32,
         marginTop: 14,
-        lineHeight: 22,
+        lineHeight: 24,
         letterSpacing: 0.2
     },
     pagination: {
@@ -293,7 +259,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 24,
-        marginBottom: 16,
+        marginBottom: 24,
         gap: 8
     },
     dot: {

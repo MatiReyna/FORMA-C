@@ -424,5 +424,38 @@ export default function AuthScreen({ navigation }) {
         }, 100)
     };
 
-    return
+    return (
+        <View style={ styles.container }>
+            <Pressable
+                onPress={ handleBack }
+                style={({ pressed }) => [
+                    styles.backButton,
+                    { top: insets.top + 10 },
+                    pressed && styles.backButtonPressed
+                ]}
+                accessibilityLabel={ AUTH_MESSAGES.ACCESSIBILITY_BACK }
+                accessibilityRole='button'
+            >
+                <Ionicons name='arrow-back' size={ 18 } color={ COLORS.textSecondary } />
+                <Text style={ styles.backButtonText }>{ AUTH_MESSAGES.BACK }</Text>
+            </Pressable>
+
+            <ScrollView
+                contentContainerStyle={ styles.scrollContent }
+                showsVerticalScrollIndicator={ false }
+            >
+                <View style={ styles.content }>
+                    <View style={ styles.logoContainer }>
+                        {/* <Image source={ logo } style={ styles.logoIcon } resizeMode='contain' /> */}
+                        <Text style={ styles.logoText }>{ AUTH_MESSAGES.LOGO_TEXT }</Text>
+                        <Text style={ styles.logoSubtext }>
+                            { isLogin ? AUTH_MESSAGES.LOGO_SUBTEXT_LOGIN : AUTH_MESSAGES.LOGO_SUBTEXT_REGISTER }
+                        </Text>
+                    </View>
+                </View>
+            </ScrollView>
+        </View>
+    )
 }
+
+const styles = StyleSheet.create({});

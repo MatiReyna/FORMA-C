@@ -55,11 +55,3 @@ export const debounce = (func, wait) => {
         timeout = setTimeout(later, wait);
     }
 }
-
-export {
-    isValidEmail,
-    isValidPassword,
-    isValidHabitName,
-    getPasswordStrength,
-    debounce
-}

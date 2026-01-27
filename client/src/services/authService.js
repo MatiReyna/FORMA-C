@@ -68,12 +68,3 @@ export const logout = async () => {
         throw error;
     }
 }
-
-export {
-    validateCredentials,
-    login,
-    register,
-    isAuthenticated,
-    getCurrentUser,
-    logout
-}
