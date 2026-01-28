@@ -5,14 +5,14 @@
     "version": "0.1.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
-    "description": "Shape mindful habits at your own pace. Calm progress, meaningful goals.",
-    "newArchEnabled": true,
+    "description": "FORMA is a calm habit companion inspired by Japanese discipline. Build consistency through simple daily rituals, without pressure or noise.",
+    "newArchEnabled": false,
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#232323"
     },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.forma.app",
       "InfoPlist": {
         "UIStatusBarStyle": "UIStatusBarStyleLightContent"
