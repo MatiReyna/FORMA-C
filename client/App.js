@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 
 import OnboardingScreen from './src/screens/OnboardingScreen';
 import AuthScreen from './src/screens/AuthScreen';
@@ -20,6 +20,10 @@ export default function App() {
   useEffect(() => {
     const loadAppState = async () => {
       try {
+        if (__DEV__) {
+          await storageService.clear();
+        }
+        
         const storedOnboarding = await storageService.getItem(STORAGE_KEYS.HAS_SEEN_ONBOARDING);
         const storedName = await storageService.getItem(STORAGE_KEYS.USER_NAME);
 
@@ -34,6 +38,10 @@ export default function App() {
     loadAppState();
   }, []);
 
+  const handleOnboardingComplete = () => {
+    setHasCompletedOnboarding(true);
+  };
+
   const handleNameSubmit = (name) => {
     setUserName(name);
   };
@@ -43,9 +51,11 @@ export default function App() {
       <StatusBar style='light' backgroundColor={ COLORS.background } />
       {
         isLoading ? (
-          <View />
+          <View style={ styles.container }>
+            <ActivityIndicator size='large' color={ COLORS.primary } />
+          </View>
         ) : !hasCompletedOnboarding ? (
-          <OnboardingScreen />
+          <OnboardingScreen onComplete={ handleOnboardingComplete } />
         ) : !userName ? (
           <NameScreen onSubmit={ handleNameSubmit } />
         ) : (
@@ -56,4 +66,9 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.background
+  }
+});
