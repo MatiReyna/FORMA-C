@@ -3,7 +3,7 @@ import { View, Text, TextInput, KeyboardAvoidingView, Platform, Pressable } from
 
 import { COLORS } from '../constants/colors';
 import { STORAGE_KEYS } from '../constants';
-import storageService from '../services/storageService';
+import { setItem } from '../services/storageService';
 
 export default function NameScreen({ onSubmit }) {
 
@@ -14,7 +14,7 @@ export default function NameScreen({ onSubmit }) {
         if (!trimmed) return;
 
         try {
-            await storageService.setItem(STORAGE_KEYS.USER_NAME, trimmed);
+            await setItem(STORAGE_KEYS.USER_NAME, trimmed);
             onSubmit(trimmed);
         } catch (error) {
             console.error('Error saving user name:', error);
