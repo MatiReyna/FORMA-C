@@ -33,19 +33,3 @@ export const removeItem = async (key) => {
         throw error;
     }
 };
-
-export const multiRemove = async (keys) => {
-    try {
-        await AsyncStorage.multiRemove(keys);
-    } catch (error) {
-        console.error('Error removing multiple items:', error);
-        throw error;
-    }
-};
-
-export default {
-    setItem,
-    getItem,
-    removeItem,
-    multiRemove
-}
