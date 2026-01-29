@@ -5,7 +5,7 @@ import * as Haptics from 'expo-haptics';
 
 import { STORAGE_KEYS, COLORS } from '../constants';
 import { TYPOGRAPHY } from '../constants/typography';
-import storageService from '../services/storageService';
+import { setItem } from '../services/storageService';
 
 import logo from '../../assets/image/logo.png';
 import forma from '../../assets/image/forma.png';
@@ -88,7 +88,7 @@ export default function OnboardingScreen({ onComplete }) {
     const handleGetStarted = async () => {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         try {
-            await storageService.setItem(STORAGE_KEYS.HAS_SEEN_ONBOARDING, 'true');
+            await setItem(STORAGE_KEYS.HAS_SEEN_ONBOARDING, true);
             onComplete?.();
         } catch (error) {
             console.error('Error saving onboarding status:', error);
