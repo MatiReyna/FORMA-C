@@ -14,10 +14,6 @@ export const FONT_FAMILIES = {
     BODY_BOLD: 'Satoshi-Bold',
 
     DECORATIVE: 'ZenKakuGothicAntique-Regular',
-
-    SYSTEM: undefined,
-    SYSTEM_IOS: undefined,
-    SYSTEM_ANDROID: undefined
 }
 
 export const FONT_SIZES = {
@@ -133,13 +129,4 @@ export const TYPOGRAPHY = {
         letterSpacing: LETTER_SPACING.WIDE,
         fontWeight: FONT_WEIGHTS.REGULAR
     }
-}
-
-export default {
-    FONT_FAMILIES,
-    FONT_SIZES,
-    LINE_HEIGHTS,
-    LETTER_SPACING,
-    FONT_WEIGHTS,
-    TYPOGRAPHY
 }
