@@ -4,12 +4,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 
 import OnboardingScreen from './src/screens/OnboardingScreen';
-import AuthScreen from './src/screens/AuthScreen';
 import NameScreen from './src/screens/NameScreen';
 
 import { COLORS } from './src/constants/colors';
 import { STORAGE_KEYS } from './src/constants';
-import storageService from './src/services/storageService';
+import { getItem } from './src/services/storageService';
 
 export default function App() {
 
@@ -20,14 +19,10 @@ export default function App() {
   useEffect(() => {
     const loadAppState = async () => {
       try {
-        if (__DEV__) {
-          await storageService.clear();
-        }
-        
-        const storedOnboarding = await storageService.getItem(STORAGE_KEYS.HAS_SEEN_ONBOARDING);
-        const storedName = await storageService.getItem(STORAGE_KEYS.USER_NAME);
+        const storedOnboarding = await getItem(STORAGE_KEYS.HAS_SEEN_ONBOARDING);
+        const storedName = await getItem(STORAGE_KEYS.USER_NAME);
 
-        setHasCompletedOnboarding(storedOnboarding === 'true');
+        setHasCompletedOnboarding(Boolean(storedOnboarding));
         setUserName(storedName);
       } catch (error) {
         console.error('Error loading app state:', error);
@@ -59,7 +54,11 @@ export default function App() {
         ) : !userName ? (
           <NameScreen onSubmit={ handleNameSubmit } />
         ) : (
-          <AuthScreen />
+          <View style={ styles.container }>
+            <Text style={{ color: COLORS.textPrimary }}>
+              FORMA - main app coming next
+            </Text>
+          </View>
         )
       }
     </SafeAreaProvider>
