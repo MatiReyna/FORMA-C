@@ -8,7 +8,7 @@ import NameScreen from './src/screens/NameScreen';
 
 import { COLORS } from './src/constants/colors';
 import { STORAGE_KEYS } from './src/constants';
-import { getItem } from './src/services/storageService';
+import { getItem, removeItem } from './src/services/storageService';
 
 export default function App() {
 
@@ -19,6 +19,12 @@ export default function App() {
   useEffect(() => {
     const loadAppState = async () => {
       try {
+
+        if (__DEV__) {
+          await removeItem(STORAGE_KEYS.HAS_SEEN_ONBOARDING);
+          await removeItem(STORAGE_KEYS.USER_NAME);
+        }
+
         const storedOnboarding = await getItem(STORAGE_KEYS.HAS_SEEN_ONBOARDING);
         const storedName = await getItem(STORAGE_KEYS.USER_NAME);
 
